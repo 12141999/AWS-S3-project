@@ -7,6 +7,7 @@ const objectModel = require("../models/object.model");
 
 const bucketFolder = "bucketFolder";
 
+//Bucket Creation Api
 router.post("/createBucket", authMiddleware, (req, res) => {
   const { bucketName } = req.body;
   if (!bucketName) {
@@ -32,6 +33,7 @@ router.post("/createBucket", authMiddleware, (req, res) => {
   }
 });
 
+//Get All Bucket List
 router.get("/listBuckets", authMiddleware, (req, res) => {
   if (!fs.existsSync(bucketFolder))
     res.json({ success: { status: 200, msg: "No bucket found" } });
@@ -52,6 +54,7 @@ router.get("/listBuckets", authMiddleware, (req, res) => {
   });
 });
 
+//Upload File/Object Api Using Multer Middleware
 router.post(
   "/uploadObject",
   authMiddleware,
@@ -78,6 +81,7 @@ router.post(
   }
 );
 
+// Get All Files/Objects
 router.get("/listObjects", authMiddleware, async (req, res) => {
   const { bucketName } = req.body;
   if (!bucketName)
@@ -112,6 +116,7 @@ router.get("/listObjects", authMiddleware, async (req, res) => {
   }
 });
 
+//Get Object/File Api
 router.get("/downloadObject", authMiddleware, (req, res) => {
   const { bucketName, fileName } = req.body;
   if (!bucketName || !fileName)
@@ -134,6 +139,7 @@ router.get("/downloadObject", authMiddleware, (req, res) => {
   fileStream.pipe(res);
 });
 
+// Delete Object/File from a particular bucket
 router.delete("/deleteObject", authMiddleware, async (req, res) => {
   const { bucketName, fileName } = req.body;
   if (!bucketName || !fileName)
@@ -174,6 +180,7 @@ router.delete("/deleteObject", authMiddleware, async (req, res) => {
   }
 });
 
+// Update existing Object/File with new file
 router.put(
   "/updateObject",
   authMiddleware,

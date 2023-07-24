@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model");
 
+// Authentication Middleware
 const authMiddleware = async (req, res, next) => {
   try {
     const { apiKey } = req.query;

@@ -3,6 +3,7 @@ const userModel = require("../models/user.model");
 const crypto = require("crypto-js");
 const authMiddleware = require("../middlewares/auth.middleware");
 
+// Register a user and generate apiKey
 router.post("/register", async (req, res) => {
   try {
     const { name } = req.body;
@@ -21,6 +22,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// Login User
 router.post("/login", authMiddleware, async (req, res) => {
   try {
     if (req.user) {

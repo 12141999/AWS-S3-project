@@ -4,6 +4,7 @@ const path = require("path");
 
 const bucketFolder = "bucketFolder";
 
+// Upload File/Object Using Multer Middleware
 const uploadFile = () => {
   return (fileUpload = multer({
     storage: multer.diskStorage({
