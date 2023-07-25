@@ -12,11 +12,11 @@ router.post("/register", async (req, res) => {
 
     const user = await userModel.create({ name, apiKey });
 
-    res.json({
+    return res.json({
       success: { status: 200, msg: "User created successfully", data: user },
     });
   } catch (err) {
-    res.json({
+    return res.json({
       error: { status: 400, msg: "Something went wrong", data: err },
     });
   }
@@ -26,12 +26,12 @@ router.post("/register", async (req, res) => {
 router.post("/login", authMiddleware, async (req, res) => {
   try {
     if (req.user) {
-      res.json({
+      return res.json({
         success: { status: 200, msg: "Login Successfully", data: req.user },
       });
     }
   } catch (err) {
-    res.json({
+    return res.json({
       error: { status: 400, msg: "Something went wrong", data: err },
     });
   }

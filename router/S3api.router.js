@@ -19,15 +19,17 @@ router.post("/createBucket", authMiddleware, (req, res) => {
 
   try {
     if (fs.existsSync(bucketPath))
-      res.json({ success: { status: 200, msg: "Bucket is already created" } });
+      return res.json({
+        success: { status: 200, msg: "Bucket is already created" },
+      });
     else {
       fs.mkdirSync(bucketPath, { recursive: true });
-      res.json({
+      return res.json({
         success: { status: 200, msg: "Bucket is created successfully" },
       });
     }
   } catch (err) {
-    res.json({
+    return res.json({
       error: { status: 400, msg: "Something went wrong", data: err },
     });
   }
@@ -36,7 +38,7 @@ router.post("/createBucket", authMiddleware, (req, res) => {
 //Get All Bucket List
 router.get("/listBuckets", authMiddleware, (req, res) => {
   if (!fs.existsSync(bucketFolder))
-    res.json({ success: { status: 200, msg: "No bucket found" } });
+    return res.json({ success: { status: 200, msg: "No bucket found" } });
   fs.readdir(bucketFolder, (err, folders) => {
     const buckets = folders.filter((folder) => {
       const folderPath = path.join(bucketFolder, folder);
@@ -50,7 +52,7 @@ router.get("/listBuckets", authMiddleware, (req, res) => {
           data: buckets,
         },
       });
-    else res.json({ success: { status: 200, msg: "No bucket found" } });
+    else return res.json({ success: { status: 200, msg: "No bucket found" } });
   });
 });
 
@@ -110,7 +112,7 @@ router.get("/listObjects", authMiddleware, async (req, res) => {
         });
     });
   } catch (err) {
-    res.json({
+    return res.json({
       error: { status: 400, msg: "Something went wrong", data: err },
     });
   }
